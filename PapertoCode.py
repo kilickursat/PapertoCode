@@ -17,7 +17,7 @@ def refine_content(extracted_text):
 def summarize_text(refined_text, api_key):
     openai.api_key = api_key
     try:
-        response = openai.Completion.create(
+        response = openai.completion.create(
             engine="gpt-4",  # Updated engine name for GPT-4 as available
             prompt=f"Summarize the following scientific text:\n\n{refined_text}\n\nSummary:",
             max_tokens=200
