@@ -13,14 +13,14 @@ def refine_content(extracted_text):
     # Placeholder for content refinement logic
     return extracted_text
 
-# Function to summarize text using GPT
+# Function to summarize text using GPT-4 (updated for new API)
 def summarize_text(refined_text, api_key):
     openai.api_key = api_key
     try:
         response = openai.Completion.create(
-            engine="davinci",
+            model="text-davinci-003",  # Updated model name for GPT-3 or GPT-4 as available
             prompt=f"Summarize the following scientific text:\n\n{refined_text}\n\nSummary:",
-            max_tokens=150
+            max_tokens=200
         )
         summarized_text = response.choices[0].text.strip()
         return summarized_text
@@ -68,5 +68,20 @@ def main():
                 refined_text = refine_content(extracted_text)
                 user_editable_summary = user_review_summarization(refined_text, api_key)
                 existing_code = "# Existing Python code"
+                integrated_code = integrate_into_code(user_editable_summary, existing_code)
+                st.code(integrated_code, language='python')
+                st.download_button("Download Generated Code", integrated_code, file_name="generated_code.py")
+
+# Chat box at the bottom of the page
+st.header("Interactive Prompt")
+user_prompt = st.text_input("Enter your prompt for code generation based on the paper:")
+
+if st.button('Generate Code'):
+    with st.spinner('Processing your prompt...'):
+        # Placeholder for processing the prompt
+        generated_code = "Generated code based on the prompt: " + user_prompt
+        st.code(generated_code, language='python')
+        st.download_button("Download Generated Code", generated_code, file_name="prompt_generated_code.py")
+
 if __name__ == "__main__":
     main()
