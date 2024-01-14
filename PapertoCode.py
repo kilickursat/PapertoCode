@@ -15,7 +15,7 @@ def refine_content(extracted_text):
 
 # Function to summarize text using GPT-4 (updated for new API)
 def summarize_text(refined_text, api_key):
-    openai.api_key = api_key
+    OpenAI.api_key = api_key
     try:
         response = client.completions.create(
             engine="gpt-3.5-turbo-1106",  # Updated engine name for GPT-4 as available
