@@ -13,12 +13,12 @@ def refine_content(extracted_text):
     # Placeholder for content refinement logic
     return extracted_text
 
-# Function to summarize text using GPT-4 (updated for new API)
+# Function to summarize text using the OpenAI API
 def summarize_text(refined_text, api_key):
-    OpenAI.api_key = api_key
+    client = OpenAI(api_key=api_key)  # Create the client instance
     try:
         response = client.completions.create(
-            engine="gpt-3.5-turbo-1106",  # Updated engine name for GPT-4 as available
+            engine="text-davinci-002",  # Use a compatible engine
             prompt=f"Summarize the following scientific text:\n\n{refined_text}\n\nSummary:",
             max_tokens=200
         )
