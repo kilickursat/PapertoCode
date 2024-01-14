@@ -15,10 +15,10 @@ def refine_content(extracted_text):
 
 # Function to summarize text using the OpenAI API
 def summarize_text(refined_text, api_key):
-    client = OpenAI(api_key=api_key)  # Create the client instance
+    client = OpenAI(api_key=api_key)
     try:
         response = client.completions.create(
-            engine="text-davinci-002",  # Use a compatible engine
+            model="text-davinci-002",  # Specify the model name
             prompt=f"Summarize the following scientific text:\n\n{refined_text}\n\nSummary:",
             max_tokens=200
         )
