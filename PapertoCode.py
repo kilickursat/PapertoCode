@@ -1,6 +1,6 @@
 import streamlit as st
 import pdfplumber
-import openai
+from openai import OpenAI
 
 # Function to extract text from PDF
 def extract_text_from_pdf(uploaded_file):
@@ -17,7 +17,7 @@ def refine_content(extracted_text):
 def summarize_text(refined_text, api_key):
     openai.api_key = api_key
     try:
-        response = openai.Completion.create(
+        response = client.completions.create(
             engine="gpt-3.5-turbo-1106",  # Updated engine name for GPT-4 as available
             prompt=f"Summarize the following scientific text:\n\n{refined_text}\n\nSummary:",
             max_tokens=200
