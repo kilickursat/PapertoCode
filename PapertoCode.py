@@ -15,10 +15,10 @@ def refine_content(extracted_text):
 
 # Function to summarize text using the OpenAI API
 def summarize_text(refined_text, api_key):
-    client = OpenAI(api_key=api_key)
+    client = OpenAI(api_key=api_key)  # Create the client instance
     try:
         response = client.completions.create(
-            model="gpt-3.5-turbo-1106",  # Specify the model name
+            engine="text-davinci-002",  # Use a compatible engine
             prompt=f"Summarize the following scientific text:\n\n{refined_text}\n\nSummary:",
             max_tokens=200
         )
@@ -46,23 +46,31 @@ def display_pdf(uploaded_file):
 
 # Streamlit interface with enhanced UI/UX
 def main():
-    st.set_page_config(layout="wide")  # Set full-screen layout
     st.title("Paper to Code")
     st.markdown("Upload a scientific paper and convert its key concepts into Python code.")
 
-    # ... (rest of the code remains the same until the file upload section)
+    api_key = st.text_input("Enter your OpenAI API key:", type="password")
 
-    if uploaded_file is not None:
-        col1, col2 = st.columns([1, 1])  # Create two equal-width columns
+    if api_key:
+        uploaded_file = st.file_uploader("Upload Paper (PDF)", type=["pdf"])
 
-        with col1:
-            st.header("Uploaded Paper")
-            pdf_file_path = display_pdf(uploaded_file)
-            st.markdown(f'<iframe src="file://{pdf_file_path}" width="100%" height="100%"></iframe>', unsafe_allow_html=True)
+        if uploaded_file is not None:
+            col1, col2 = st.columns(2)
 
-        with col2:
-            st.header("Generated Code")
-            # ... (rest of the code within the column remains the same)
+            with col1:
+                st.header("Uploaded Paper")
+                pdf_file_path = display_pdf(uploaded_file)
+                st.markdown(f'<iframe src="file://{pdf_file_path}" width="100%" height="400"></iframe>', unsafe_allow_html=True)
+
+            with col2:
+                st.header("Generated Code")
+                extracted_text = extract_text_from_pdf(uploaded_file)
+                refined_text = refine_content(extracted_text)
+                user_editable_summary = user_review_summarization(refined_text, api_key)
+                existing_code = "# Existing Python code"
+                integrated_code = integrate_into_code(user_editable_summary, existing_code)
+                st.code(integrated_code, language='python')
+                st.download_button("Download Generated Code", integrated_code, file_name="generated_code.py")
 
 if __name__ == "__main__":
     main()
