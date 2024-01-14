@@ -18,7 +18,7 @@ def summarize_text(refined_text, api_key):
     openai.api_key = api_key
     try:
         response = openai.Completion.create(
-            model="text-davinci-003",  # Updated model name for GPT-3 or GPT-4 as available
+            model="gpt-4",  # Updated model name for GPT-3 or GPT-4 as available
             prompt=f"Summarize the following scientific text:\n\n{refined_text}\n\nSummary:",
             max_tokens=200
         )
