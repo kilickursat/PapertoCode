@@ -55,12 +55,13 @@ def main():
         uploaded_file = st.file_uploader("Upload Paper (PDF)", type=["pdf"])
 
         if uploaded_file is not None:
-            col1, col2 = st.columns(2)
+            col1, col2 = st.beta_columns(2)  # Create two columns
 
             with col1:
                 st.header("Uploaded Paper")
                 pdf_file_path = display_pdf(uploaded_file)
-                st.markdown(f'<iframe src="file://{pdf_file_path}" width="100%" height="400"></iframe>', unsafe_allow_html=True)
+                st.markdown(f'<iframe src="file://{pdf_file_path}" style="width:100%; height:100vh;"></iframe>',
+                            unsafe_allow_html=True)  # Use CSS to make it full-screen
 
             with col2:
                 st.header("Generated Code")
