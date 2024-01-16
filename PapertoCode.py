@@ -7,15 +7,7 @@ from PIL import Image
 # Set up the title of your Streamlit app
 st.title('Paper to Code Implementation')
 
-# Load the image using PIL
-image_path = 'An_artificial_neural_network_with_covered_by_science_and_scientific_articles_the_ANN_swallow_the_knowledge_from_the_papers_like_a_black_hole__style-_Kon_style-Isometric_seed-0ts-1705245629_idx-0.png'
 
-image = Image.open(image_path)
-
-# Display the image
-st.image(image, caption='Your Image Caption', use_column_width=True)
-
-# Rest of your Streamlit app code
 
 
 # Function to extract text from PDF
@@ -61,6 +53,15 @@ def display_pdf(uploaded_file):
     return uploaded_file.name
 
 # Streamlit interface with enhanced UI/UX
+# Load the image using PIL
+image_path = 'An_artificial_neural_network_with_covered_by_science_and_scientific_articles_the_ANN_swallow_the_knowledge_from_the_papers_like_a_black_hole__style-_Kon_style-Isometric_seed-0ts-1705245629_idx-0.png'
+
+image = Image.open(image_path)
+
+# Display the image
+st.image(image, caption='Your Image Caption', use_column_width=True)
+
+# Rest of your Streamlit app code
 def main():
     st.title("Paper to Code")
     st.markdown("Upload a scientific paper and convert its key concepts into Python code.")
