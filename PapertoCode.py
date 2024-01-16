@@ -13,7 +13,7 @@ image_path = 'An_artificial_neural_network_with_covered_by_science_and_scientifi
 image = Image.open(image_path)
 
 # Display the image
-st.image(image, caption='Scientific paper code implementation with GenAI',width=300)
+st.image(image, caption='Scientific paper code implementation with GenAI',width=600)
 
 # Rest of your Streamlit app code
 
