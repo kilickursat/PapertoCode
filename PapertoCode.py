@@ -1,6 +1,6 @@
 import streamlit as st
 import pdfplumber
-import openai
+from openai import OpenAI
 from PIL import Image
 
 # Set up the title of your Streamlit app
