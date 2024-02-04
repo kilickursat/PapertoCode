@@ -1,6 +1,6 @@
 import streamlit as st
 import pdfplumber
-from openai import OpenAI
+import openai
 from PIL import Image
 
 # Set up the title of your Streamlit app
@@ -22,21 +22,21 @@ def refine_content(extracted_text):
     # Placeholder for content refinement logic
     return extracted_text
 
-# Summarize text using the OpenAI API
+# Define function to set API key and call OpenAI API
 def summarize_text(refined_text, api_key):
-    client = OpenAI()
+    # Set the API key
     openai.api_key = api_key
+
     try:
-        response = client.chat.completion.create(
-            model="gpt-3.5-turbo",  # Adjusted for the Chat Completions API
+        # Make an API call to generate a summary
+        response = openai.ChatCompletion.create(
+            model="gpt-3.5-turbo",
             messages=[
                 {"role": "system", "content": "You are a helpful assistant."},
-                {"role": "user", "content": f"Summarize the following scientific text:\n\n{refined_text}"},
+                {"role": "user", "content": f"Summarize the following scientific text:\n\n{refined_text}"}
             ],
-            temperature=0.7,
             max_tokens=200
         )
-        # Assuming the summary is the 'content' of the last message in the response
         summarized_text = response.choices[0].message['content'].strip()
         return summarized_text
     except Exception as e:
