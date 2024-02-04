@@ -25,7 +25,7 @@ def refine_content(extracted_text):
 
 # Summarize text using the OpenAI API
 def summarize_text(refined_text, api_key):
-    openai.api_key = api_key
+    client = OpenAI(api_key=api_key)
     try:
         response = client.completion.create(
             engine="gpt-3.5-turbo",
