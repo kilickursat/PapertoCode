@@ -26,7 +26,7 @@ def refine_content(extracted_text):
 def summarize_text(refined_text, api_key):
     openai.api_key = api_key
     try:
-        response = openai.ChatCompletion.create(
+        response = openai.chat.completion.create(
             model="gpt-3.5-turbo",  # Adjusted for the Chat Completions API
             messages=[
                 {"role": "system", "content": "You are a helpful assistant."},
