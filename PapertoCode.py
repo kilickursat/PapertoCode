@@ -29,7 +29,7 @@ def summarize_text(refined_text, api_key):
 
     try:
         # Make an API call to generate a summary
-        response = openai.ChatCompletion.create(
+        response = openai.chat.completions.create(
             model="gpt-3.5-turbo",
             messages=[
                 {"role": "system", "content": "You are a helpful assistant."},
