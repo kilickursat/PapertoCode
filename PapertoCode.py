@@ -40,10 +40,23 @@ def summarize_text(refined_text, api_key):
         st.error(f"Error in summarization: {e}")
         return ""
 
-# Function for user to review and edit the summarized text
-def user_review_summarization(refined_text, api_key):
-    summarized_text = summarize_text(refined_text, api_key)
-    return st.text_area("Edit the summary as needed:", value=summarized_text)
+# Function to summarize text using the OpenAI API
+def summarize_text(refined_text, api_key):
+    import openai  # Ensure openai is imported at the top as well
+    openai.api_key = api_key
+    try:
+        response = openai.Completion.create(
+            engine="gpt-3.5-turbo",  # Correctly specify the engine here
+            prompt=f"Summarize the following scientific text:\n\n{refined_text}\n\nSummary:",
+            max_tokens=200,
+            temperature=0.7,
+        )
+        summarized_text = response.choices[0].text.strip()  # Correctly access the response data
+        return summarized_text
+    except Exception as e:
+        st.error(f"Error in summarization: {e}")
+        return ""
+
 
 # Function to integrate summarized text into Python code
 def integrate_into_code(user_summary, existing_code):
