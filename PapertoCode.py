@@ -1,23 +1,17 @@
 import streamlit as st
 import pdfplumber
 from openai import OpenAI
-import streamlit as st
 from PIL import Image
 
 # Set up the title of your Streamlit app
 st.title('Paper to Code Implementation')
 
 # Load the image using PIL
-image_path = 'An_artificial_neural_network_with_covered_by_science_and_scientific_articles_the_ANN_swallow_the_knowledge_from_the_papers_like_a_black_hole__style-_Kon_style-Isometric_seed-0ts-1705245629_idx-0.png'
-
+image_path = 'path_to_your_image.png'
 image = Image.open(image_path)
 
 # Display the image
-st.image(image, caption='Scientific paper code implementation with GenAI',width=600)
-
-# Rest of your Streamlit app code
-
-
+st.image(image, caption='Scientific paper code implementation with GenAI', width=600)
 
 # Function to extract text from PDF
 def extract_text_from_pdf(uploaded_file):
@@ -34,12 +28,13 @@ def refine_content(extracted_text):
 def summarize_text(refined_text, api_key):
     client = OpenAI(api_key=api_key)
     try:
-        response = client.completions.create(
-            model="gpt-4",  # Specify the model name
+        response = client.Completion.create(
+            model="gpt-3.5-turbo",  # Change to gpt-3.5-turbo
             prompt=f"Summarize the following scientific text:\n\n{refined_text}\n\nSummary:",
-            max_tokens=200
+            max_tokens=200,
+            temperature=0.7,
         )
-        summarized_text = response.choices[0].text.strip()
+        summarized_text = response['choices'][0]['text'].strip()  # Adjusted for gpt-3.5-turbo response format
         return summarized_text
     except Exception as e:
         st.error(f"Error in summarization: {e}")
@@ -62,7 +57,6 @@ def display_pdf(uploaded_file):
     return uploaded_file.name
 
 # Streamlit interface with enhanced UI/UX
-
 def main():
     st.title("Paper to Code")
     st.markdown("Upload a scientific paper and convert its key concepts into Python code.")
