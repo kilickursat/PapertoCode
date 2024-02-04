@@ -8,7 +8,7 @@ st.title('Paper to Code Implementation')
 
 # Load and display the image
 # Ensure the path is correctly specified
-image_path = 'path_to_your_image.png'
+image_path = 'An_artificial_neural_network_with_covered_by_science_and_scientific_articles_the_ANN_swallow_the_knowledge_from_the_papers_like_a_black_hole__style-_Kon_style-Isometric_seed-0ts-1705245629_idx-0.png'
 image = Image.open(image_path)
 st.image(image, caption='Scientific paper code implementation with GenAI', width=600)
 
