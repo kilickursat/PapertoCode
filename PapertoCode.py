@@ -30,7 +30,7 @@ def summarize_text(refined_text, api_key):
     try:
         # Make an API call to generate a summary
         response = openai.chat.completions.create(
-            model="gpt-3.5-turbo",
+            model="gpt-3.5-turbo-0125",
             messages=[
                 {"role": "system", "content": "You are a helpful assistant."},
                 {"role": "user", "content": f"Summarize the following scientific text:\n\n{refined_text}"}
