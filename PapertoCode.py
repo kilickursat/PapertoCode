@@ -1,13 +1,13 @@
 import streamlit as st
 import pdfplumber
-import openai  # Ensure this is imported
+import openai
 from PIL import Image
 
 # Set up the title of your Streamlit app
 st.title('Paper to Code Implementation')
 
 # Load and display the image
-image_path = 'An_artificial_neural_network_with_covered_by_science_and_scientific_articles_the_ANN_swallow_the_knowledge_from_the_papers_like_a_black_hole__style-_Kon_style-Isometric_seed-0ts-1705245629_idx-0.png'
+image_path = 'path_to_your_image.png'
 image = Image.open(image_path)
 st.image(image, caption='Scientific paper code implementation with GenAI', width=600)
 
@@ -19,20 +19,24 @@ def extract_text_from_pdf(uploaded_file):
 
 # Function to refine content
 def refine_content(extracted_text):
-    return extracted_text  # Placeholder for any refinement logic
+    # Placeholder for content refinement logic
+    return extracted_text
 
 # Summarize text using the OpenAI API
 def summarize_text(refined_text, api_key):
     openai.api_key = api_key
-    client = openai.OpenAI(api_key=api_key)  # Correct instantiation of the client
     try:
-        response = client.completions.create(
-            model="text-davinci-003",  # Assuming the use of Davinci as an example
-            prompt=f"Summarize the following scientific text:\n\n{refined_text}\n\nSummary:",
-            max_tokens=200,
+        response = openai.ChatCompletion.create(
+            model="gpt-3.5-turbo",  # Adjusted for the Chat Completions API
+            messages=[
+                {"role": "system", "content": "You are a helpful assistant."},
+                {"role": "user", "content": f"Summarize the following scientific text:\n\n{refined_text}"},
+            ],
             temperature=0.7,
+            max_tokens=200
         )
-        summarized_text = response['choices'][0]['text'].strip()
+        # Assuming the summary is the 'content' of the last message in the response
+        summarized_text = response.choices[0].message['content'].strip()
         return summarized_text
     except Exception as e:
         st.error(f"Error in summarization: {e}")
@@ -45,6 +49,7 @@ def user_review_summarization(refined_text, api_key):
 
 # Function to integrate summarized text into Python code
 def integrate_into_code(user_summary, existing_code):
+    # Placeholder for code integration logic
     return f"{existing_code}\n\n# Integrated Summary:\n{user_summary}"
 
 # Function to display PDF
@@ -53,7 +58,7 @@ def display_pdf(uploaded_file):
         f.write(uploaded_file.getbuffer())
     return uploaded_file.name
 
-# Main interface function
+# Streamlit interface with enhanced UI/UX
 def main():
     st.title("Paper to Code")
     st.markdown("Upload a scientific paper and convert its key concepts into Python code.")
